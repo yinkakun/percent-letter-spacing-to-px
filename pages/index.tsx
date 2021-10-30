@@ -68,7 +68,7 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="container flex items-center h-full px-6 py-8 mx-auto">
-                <div className="mx-auto border mockup-window h-full max-h-full lg:max-h-96 bg-base-200 border-base=300 w-full max-w-5xl">
+                <div className="mx-auto border mockup-window h-full lg:max-h-96 bg-base-200 border-base=300 w-full max-w-5xl overflow-y-auto py-10">
                     <div className="flex flex-col items-center px-12 mt-24">
                         <h1 className="text-center mb-14 text-opacity-90">
                             Convert Line heights in Percentage value to px.
