@@ -1,17 +1,6 @@
-# Percent Line Height to Px
+# Figm Percent Letter Spacing to Px
 
-A simple tool to convert lineheight values in percent to px. Built with Next JS and styled with Tailwind CSS. The tool uses the formula below:
-
-<br />
-
-```ts
-const converLineHeightInPercentToPx = (
-    lineHeightInPercent: number = 0,
-    fontSizeInPx: number = 0
-): string => {
-    return ((lineHeightInPercent / 100) * fontSizeInPx).toFixed(1);
-};
-```
+A simple tool to convert Figma percent letter spacing values to px. Built with Next JS and styled using Tailwind CSS.
 
 <br />
 
