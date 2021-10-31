@@ -6,17 +6,15 @@ import { useCopyToClipboard } from "usehooks-ts";
 
 type Inputs = {
     fontSizeInPx: number;
-    lineHeightInPercent: number;
+    letterSpacingInPercent: number;
 };
 
-const converLineHeightInPercentToPx = (
-    lineHeightInPercent: number = 0,
+const convertPercentLetterSpacingToPx = (
+    letterSpacingInPercent: number = 0,
     fontSizeInPx: number = 0
 ): string => {
-    return ((lineHeightInPercent / 100) * fontSizeInPx).toFixed(1);
+    return ((letterSpacingInPercent / 100) * fontSizeInPx).toFixed(1);
 };
-
-const MAX_INPUT_LENGTH = 5;
 
 const Home: NextPage = () => {
     const {
@@ -29,27 +27,27 @@ const Home: NextPage = () => {
         shouldUseNativeValidation: false,
     });
 
-    const lineHeightInPercent = watch("lineHeightInPercent");
+    const lineHeightInPercent = watch("letterSpacingInPercent");
     const fontSizeInPx = watch("fontSizeInPx");
     const [isCopied, setIsCopied] = useState(false);
-    const [lineHeightInPx, setLineHeightInPx] = useState("0");
+    const [letterSpacingInPercent, setLetterSpacingInPercent] = useState("0");
     const [_value, copy] = useCopyToClipboard();
 
     useEffect(() => {
-        const lineHeightInPx = converLineHeightInPercentToPx(
+        const lineHeightInPx = convertPercentLetterSpacingToPx(
             lineHeightInPercent,
             fontSizeInPx
         );
 
-        setLineHeightInPx(lineHeightInPx);
+        setLetterSpacingInPercent(lineHeightInPx);
     }, [lineHeightInPercent, fontSizeInPx]);
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
-        const lineHeightInPx = converLineHeightInPercentToPx(
-            data.lineHeightInPercent,
+        const lineHeightInPx = convertPercentLetterSpacingToPx(
+            data.letterSpacingInPercent,
             data.fontSizeInPx
         );
-        setLineHeightInPx(lineHeightInPx);
+        setLetterSpacingInPercent(lineHeightInPx);
         copy(`${lineHeightInPx}px`);
         setIsCopied(true);
         setTimeout(() => {
@@ -60,52 +58,23 @@ const Home: NextPage = () => {
     return (
         <div>
             <Head>
-                <title> Convert Line heights in Percentage value to px.</title>
+                <title>Convert Figma Percent Letter spacing to px</title>
                 <meta
                     name="description"
-                    content=" Convert Line heights in Percentage value to px."
+                    content="Convert Figma Percent Letter spacing to px"
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <main className="container flex items-center h-full px-6 py-8 mx-auto">
                 <div className="mx-auto border mockup-window h-full lg:max-h-96 bg-base-200 border-base=300 w-full max-w-5xl overflow-y-auto py-10">
                     <div className="flex flex-col items-center px-12 mt-24">
-                        <h1 className="text-center mb-14 text-opacity-90">
-                            Convert Line heights in Percentage value to px.
+                        <h1 className="text-center capitalize mb-14 text-opacity-90">
+                            Convert Figma Percent Letter spacing to px
                         </h1>
                         <form
                             onSubmit={handleSubmit(onSubmit)}
                             className="flex flex-col items-center gap-8 mt-6 md:items-stretch lg:flex-row"
                         >
-                            <div className="relative form-control">
-                                <label className="absolute label -top-8">
-                                    <span className="text-xs label-text text-opacity-80">
-                                        Line height in percent
-                                    </span>
-                                </label>
-                                <label className="relative input-group-md">
-                                    <input
-                                        {...register("lineHeightInPercent")}
-                                        className="pr-10 input input-bordered"
-                                        autoComplete="off"
-                                        type="number"
-                                        maxLength={MAX_INPUT_LENGTH}
-                                        onInput={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                        ) =>
-                                            (e.target.value =
-                                                e.target.value.slice(
-                                                    0,
-                                                    MAX_INPUT_LENGTH
-                                                ))
-                                        }
-                                    />
-                                    <span className="absolute top-0 right-0 flex items-center justify-center h-full px-4 border rounded-l-none rounded-r-lg bg-base-300">
-                                        %
-                                    </span>
-                                </label>
-                            </div>
-
                             <div className="relative form-control">
                                 <label className="absolute label -top-8">
                                     <span className="text-xs label-text text-opacity-80">
@@ -118,16 +87,6 @@ const Home: NextPage = () => {
                                         className="pr-10 input input-bordered"
                                         autoComplete="off"
                                         type="number"
-                                        maxLength={MAX_INPUT_LENGTH}
-                                        onInput={(
-                                            e: React.ChangeEvent<HTMLInputElement>
-                                        ) =>
-                                            (e.target.value =
-                                                e.target.value.slice(
-                                                    0,
-                                                    MAX_INPUT_LENGTH
-                                                ))
-                                        }
                                     />
                                     <span className="absolute top-0 right-0 flex items-center justify-center h-full px-4 border rounded-l-none rounded-r-lg bg-base-300">
                                         px
@@ -135,11 +94,35 @@ const Home: NextPage = () => {
                                 </label>
                             </div>
 
+                            <div className="relative form-control">
+                                <label className="absolute label -top-8">
+                                    <span className="text-xs label-text text-opacity-80">
+                                        Letter spacing in percent
+                                    </span>
+                                </label>
+                                <label className="relative input-group-md">
+                                    <input
+                                        {...register("letterSpacingInPercent")}
+                                        className="pr-10 input input-bordered"
+                                        autoComplete="off"
+                                        type="number"
+                                    />
+                                    <span className="absolute top-0 right-0 flex items-center justify-center h-full px-4 border rounded-l-none rounded-r-lg bg-base-300">
+                                        %
+                                    </span>
+                                </label>
+                            </div>
+
                             <div className="px-2 py-2 text-xl ">=</div>
 
-                            <div className="flex items-center justify-between p-2 bg-white border rounded-lg">
+                            <div className="relative flex items-center justify-between p-2 bg-white border rounded-lg">
+                                <label className="absolute label -top-8">
+                                    <span className="text-xs label-text text-opacity-80">
+                                        Letter spacing in px
+                                    </span>
+                                </label>
                                 <span className="w-40 ml-4 overflow-hidden overflow-ellipsis">
-                                    <span>{lineHeightInPx}</span>
+                                    <span>{letterSpacingInPercent}</span>
                                     <span className="mr-4">px</span>
                                 </span>
                                 <button
